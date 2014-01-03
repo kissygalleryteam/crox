@@ -9,14 +9,16 @@ Crox是一个由JavaScript语言实现的高性能跨语言模板引擎.Crox模�
 ## 初始化组件
 
     S.use('gallery/crox/1.0/index', function (S, Crox) {
-         var tmpl = 'CROX_TEMPLATE';
+         var tmpl = '{{CROX_TEMPLATE_HERE}}';
 
          var fn = Crox.compile(tmpl);
 
          var html = fn({
             a: 1,
             b: 2
-         })
+         });
+
+         console.log(html);
     })
 
 ## API说明
