@@ -10,9 +10,13 @@ gallery/crox/1.0/index
  *
  * Released under the MIT license
  * Date: Fri, 6 Dec 2013 09:13:24 UTC
+ *
+ * Author: @三冰
  */
 KISSY.add('gallery/crox/1.0/index',function(){
+
     var Crox = (function() {
+
 function Class(base, constructor, methods) {
     /// <param name="base" type="Function"></param>
     /// <param name="constructor" type="Function"></param>
@@ -604,6 +608,7 @@ function codegen_js_wrap(s) {
     var f = Function('root', body);
     return f;
 }
+
 function codegen_js_tofn(prog) {
     /// <param name="prog" type="Array">AST</param>
     /// <returns type="Function" />
@@ -616,6 +621,7 @@ function codegen_js_tofn(prog) {
 function compile2jsfn(s) {
     return codegen_js_tofn(parse(Lexer(s)));
 }
+
 var Crox = {
     compile: function(s) {
         return compile2jsfn(s);
@@ -628,4 +634,6 @@ var Crox = {
     }
 };
 
-Crox.version = "1.1.0";return Crox;})();return Crox;});
+Crox.version = "1.1.0";return Crox;})();
+return Crox;
+});
