@@ -9,6 +9,7 @@
 <body>
 <h2>Crox的demo</h2>
 
+<div id="page"></div>
 <script>
     var S = KISSY;
     if (S.Config.debug) {
@@ -32,7 +33,7 @@
             developer: '@三冰',
             publisher: '@思竹'
           });
-          document.write(html);
+          S.all('#page').html(html);
     })
 </script>
 </body>
