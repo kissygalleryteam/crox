@@ -608,6 +608,7 @@ function codegen_js_wrap(s) {
     var f = Function('root', body);
     return f;
 }
+
 function codegen_js_tofn(prog) {
     /// <param name="prog" type="Array">AST</param>
     /// <returns type="Function" />
@@ -620,6 +621,7 @@ function codegen_js_tofn(prog) {
 function compile2jsfn(s) {
     return codegen_js_tofn(parse(Lexer(s)));
 }
+
 var Crox = {
     compile: function(s) {
         return compile2jsfn(s);
