@@ -20,3 +20,5 @@ Crox是一个由JavaScript语言实现的高性能跨语言模板引擎.Crox模�
     })
 
 ## API说明
+
+[http://thx.github.io/crox/](http://thx.github.io/crox/)
