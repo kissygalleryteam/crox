@@ -9,11 +9,11 @@ Crox将保证翻译后的结果具备最佳执行效率。
 * 版本：1.0
 * 作者：三冰，李牧，思竹，思霏
 * demo：[Demo](http://gallery.kissyui.com/crox/1.0/demo/index.html)
-* [Crox的整体设计](http://gitlab.alibaba-inc.com/thx/crox/blob/master/docs/crox_design_overview.md)
+* [Crox的方案介绍](https://github.com/thx/crox/blob/master/docs/crox_design_overview.md)
 
 ## 初始化组件
 
-1. 配置Kissy
+- 配置Kissy(Kissy 1.3.0+ 不需要编写此代码)
 
 ```js
 KISSY.config({
@@ -27,7 +27,7 @@ KISSY.config({
 });
 ```
 
-2. 引用Crox
+- 引用Crox
 
 ```js
 KISSY.use('gallery/crox/1.0/index', function (S, Crox) {
