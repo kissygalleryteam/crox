@@ -1,40 +1,37 @@
 <!doctype html>
-<html>
+<html lang="zh">
 <head>
-    <meta charset="utf-8"/>
-    <title>Crox的demo</title>
-    <script src="http://g.tbcdn.cn/kissy/k/1.3.0/kissy-min.js" charset="utf-8"></script>
-    <link rel="stylesheet" href="http://g.tbcdn.cn/kissy/k/1.3.0/css/dpl/base-min.css">
+    <meta charset="utf-8">
+    <style type="text/css">
+        div, h2 {
+            margin-top: 20px;
+            padding: 10px;
+        }
+        h3 {
+            margin-top: 10px;
+            padding: 10px;
+        }
+        div a {
+            margin-top: 10px;
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
-<h2>Crox的demo</h2>
-
-<div id="page"></div>
-<script>
-    var S = KISSY;
-    if (S.Config.debug) {
-        var srcPath = "../../";
-        S.config({
-            packages:[
-                {
-                    name:"gallery/crox",
-                    path:srcPath,
-                    charset:"utf-8",
-                    ignorePackageNameInUri:true
-                }
-            ]
-        });
-    }
-
-    S.use('gallery/crox/1.0/index', function (S, Crox) {
-          var fn = Crox.compile('这里是{{root.galleryName}}，由{{root.developer}}开发，由{{root.publisher}}整理发布到Kissy Gallary')
-          var html = fn({
-            galleryName: 'Crox',
-            developer: '@三冰',
-            publisher: '@思竹'
-          });
-          S.all('#page').html(html);
-    })
-</script>
+    <div style="width: 980px;margin: 0 auto;">
+        <h2 style="color: red;">热烈祝贺 Crox 和 Kissy 两个好基友终成眷属！</h2>
+        <h3>以下是两个测试页面：</h3>
+        <div>开发时，Crox模板tpl被编译成一个Crox-Kissy模块，该模块依赖Crox和其他子模板：</br>
+            <a href="demo/before.html">去看看开发时的demo页面</a>
+        </div>
+        <div>发布时，Crox模板tpl被Crox.compile翻译成原生js Function，并被包装成Kissy模块，该模块不依赖Crox，也不依赖子模块：</br>
+            <a href="demo/after.html">去看看发布后的demo页面</a>
+        </div>
+        <div></div>
+        <h3>其他说明：</h3>
+        <div>
+            编译过程使用了Grunt，点击 <a href="http://gitlab.alibaba-inc.com/thx/crox-kissy/blob/master/README.md">这里</a> 看一看Crox-Kissy的Grunt相关的说明。
+        </div>
+    </div>
 </body>
 </html>

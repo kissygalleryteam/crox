@@ -1,0 +1,14 @@
+.module {
+    position: relative;
+    border: 1px solid #DDD;
+    padding: 10px;
+}
+.tip {
+    position: absolute;
+    left: 15px;
+    top: -13px;
+    background-color: #EEE;
+    padding: 4px;
+    color: #888;
+    border-radius: 4px;
+}
