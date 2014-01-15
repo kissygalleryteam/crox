@@ -174,6 +174,7 @@ return $s;
 
 同理，运行 `crox --target-type php`，将会翻译 `a.tpl` 并生成php文件 `a.php`。
 
+
 ## Crox-Kissy-Grunt插件
 
 Crox是跨语言的模板引擎。
