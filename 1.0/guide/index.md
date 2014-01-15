@@ -8,7 +8,8 @@ Crox将保证翻译后的结果具备最佳执行效率。
 
 * 版本：1.0
 * 作者：三冰，李牧，思竹，思霏
-* [Demo](http://gallery.kissyui.com/crox/1.0/demo/index.html)
+* [Crox Demo](http://gallery.kissyui.com/crox/1.0/demo/index.html)
+* [Crox-Kissy-Grunt Demo](http://gallery.kissyui.com/crox/1.0/demo/index-grunt.html)
 * [Crox的方案介绍](https://github.com/thx/crox/blob/master/docs/crox_design_overview.md)
 
 ## 初始化组件
@@ -79,4 +80,18 @@ Crox的所有接口都声明在 `Crox` 这个JS对象上的。目前，具体的
 
 Crox是前后端各种语言都通用的模板引擎，在JS端，如果采用Kissy进行开发，那么Crox-Kissy-Grunt将是你的得力助手。
 
-具体介绍请参见：[http://gitlab.alibaba-inc.com/thx/crox-kissy](http://gitlab.alibaba-inc.com/thx/crox-kissy)
+Crox-Kissy-Grunt是一个Grunt插件，用于在开发时和发布时，将Crox编译成正确的Kissy模块。
+
+- 开发时
+
+开发时，Crox模板tpl被编译成一个Crox-Kissy模块，该模块依赖Crox和其他子模板。
+
+[demo页面](http://gallery.kissyui.com/crox/1.0/demo/demo/before.html)
+
+- 发布时
+
+发布时，Crox模板tpl被Crox.compile翻译成原生js Function，并被包装成Kissy模块，该模块不依赖Crox，也不依赖子模块。
+
+[demo页面](http://gallery.kissyui.com/crox/1.0/demo/demo/after.html)
+
+更多介绍，请移步：[http://gitlab.alibaba-inc.com/thx/crox-kissy](http://gitlab.alibaba-inc.com/thx/crox-kissy/tree/master)
