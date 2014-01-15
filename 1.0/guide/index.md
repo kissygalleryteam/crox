@@ -9,7 +9,7 @@ Crox将保证翻译后的结果具备最佳执行效率。
 * 版本：1.0
 * 作者：三冰，李牧，思竹，陆辉，思霏
 * [Crox Demo](http://gallery.kissyui.com/crox/1.0/demo/index.html)
-* [Crox-Kissy-Grunt Demo](http://gallery.kissyui.com/crox/1.0/demo/index-grunt.html)
+* [Kissy下使用Crox include的Demo](http://gallery.kissyui.com/crox/1.0/demo/index-grunt.html)
 * [Crox的方案介绍](https://github.com/thx/crox/blob/master/docs/crox_design_overview.md)
 
 ## 初始化组件
@@ -155,12 +155,8 @@ return $t_r;
 
 ```js
 function anonymous(root) {
-var obj = { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' };
-    function $htmlEncode(s) {
-        return String(s).replace(/[<>&"]/g, function(c) {
-            return obj[c];
-        });
-    }var $s = '';function $print(s){ $s += s; } var ok=root.ok;
+    // 为了篇幅，这里忽略一部分辅助方法 :-)
+    var $s = '';function $print(s){ $s += s; } var ok=root.ok;
     $print(" ");
     if(ok){
         $print(" 好 ");
@@ -175,20 +171,128 @@ return $s;
 同理，运行 `crox --target-type php`，将会翻译 `a.tpl` 并生成php文件 `a.php`。
 
 
-## Crox-Kissy-Grunt插件
+## Kissy环境下的Crox include支持
 
 Crox是跨语言的模板引擎。
 
-Crox支持子模板导入(include)，但是在前端环境下，并不能像php或velocity等后端语言或模板引擎那样，实时同步的拿到所导入的子文件内容。
+Crox支持子模板导入(include)，一个模板可能include多个子模板，而每一个子模板，又可能include其他子模板。
 
-在以KISSY为基础的前端环境中，KISSY所支持的模块加载机制，是在前端环境下实现Crox include机制的捷径。
+以Kissy为基础的前端环境，模板之间的依赖关系，非常像Kissy模块之间的依赖关系。Kissy所支持的模块依赖机制，能够与Crox的include进行良好的对应。
 
-为了更好的完成Crox到KISSY模块的翻译，将Crox include机制和KISSY模块加载机制对应起来，并保证发布后的Crox-Kissy模块的效率，我们为Crox开发了 `Crox-Kissy-Grunt插件`。
+因此，为了更好的完成Crox到Kissy模块的翻译，将Crox include机制和Kissy模块加载机制对应起来，并保证发布后的Crox-Kissy模块的效率，我们开发了一个Kissy下使用Crox的辅助工具。
 
-此插件在不同的使用场景时所做的具体工作如下：
+此工具在不同的使用场景时所做的具体工作如下：
 
 - 开发时，Crox模板tpl被编译成一个Kissy模块，该模块保留原模板内容，并依赖Crox和其他子模板。[Demo](http://gallery.kissyui.com/crox/1.0/demo/demo/before.html)
 
 - 发布时，Crox模板tpl被Crox.compile翻译成原生js Function，并被包装成Kissy模块（所有子模板依赖都将被替换）。该模块不依赖Crox，也不依赖子模块。 [Demo](http://gallery.kissyui.com/crox/1.0/demo/demo/after.html)
 
-更多介绍，请移步：[http://gitlab.alibaba-inc.com/thx/crox-kissy](http://gitlab.alibaba-inc.com/thx/crox-kissy/tree/master)
+### 在Kissy下支持Crox include的翻译示例
+
+#### Crox模板源文件
+
+`src/app/partials/header/index.tpl`
+
+```html
+<div class="header">
+    <h2><span>logo</span> {{include ./user/index.tpl}} </h2>
+</div>
+```
+
+`src/app/partials/header/user/index.tpl`
+
+```html
+<<div class="user">
+    用户：<a href="#nogo">{{root.username}}</a>
+</div>
+```
+
+#### 开发时实时转化的结果
+
+`src/app/partials/header/index.tpl.js`
+
+```js
+KISSY.add('app/partials/header/index.tpl', function(S, Crox, $1) {
+
+    var tmpl = 
+'<div class="header">\
+    <h2><span>logo</span> {{include ./user/index.tpl}} </h2>\
+</div>';
+
+    tmpl = tmpl.replace(RegExp('{{include ./user/index.tpl}}', 'g'), $1.tmpl);
+
+    return {
+        tmpl: tmpl,
+        fn: Crox.compile(tmpl)
+    }
+}, {
+    requires: [
+        'crox', './user/index.tpl'
+    ]
+});
+```
+
+`src/app/partials/header/user/index.tpl.js`
+
+```js
+KISSY.add('app/partials/header/user/index.tpl', function(S, Crox) {
+
+    var tmpl = 
+'<div class="user">\
+    用户：<a href="#nogo">{{root.username}}</a>\
+</div>';
+
+    return {
+        tmpl: tmpl,
+        fn: Crox.compile(tmpl)
+    }
+}, {
+    requires: [
+        'crox'
+    ]
+});
+```
+
+#### 发布时转化的结果（经过Crox的翻译后的原生js Function）
+
+`build/app/partials/header/index.tpl.js`
+
+```js
+KISSY.add('app/partials/header/index.tpl', function(S) {
+
+var croxFn = function anonymous(root) {
+    // 为了篇幅，这里忽略一部分辅助方法 :-)
+    var $s = '';function $print(s){ $s += s; } $print("<div class=\"header\">    <h2><span>logo</span> <div class=\"user\">    用户：<a href=\"#nogo\">");
+    $print($htmlEncode(root.username));
+    $print("</a></div> </h2></div>");
+return $s;
+};
+
+return {
+    fn: croxFn
+};
+
+});
+```
+
+`build/app/partials/header/user/index.tpl.js`
+
+```js
+KISSY.add('app/partials/header/user/index.tpl', function(S) {
+
+var croxFn = function anonymous(root) {
+    // 为了篇幅，这里忽略一部分辅助方法 :-)
+    var $s = '';function $print(s){ $s += s; } $print("<div class=\"user\">    用户：<a href=\"#nogo\">");
+    $print($htmlEncode(root.username));
+    $print("</a></div>");
+return $s;
+};
+
+return {
+    fn: croxFn
+};
+
+});
+```
+
+更多介绍，请移步：[http://gitlab.alibaba-inc.com/thx/crox-kissy](http://gitlab.alibaba-inc.com/thx/crox-kissy/blob/master/README.md)
