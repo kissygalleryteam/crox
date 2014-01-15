@@ -80,17 +80,17 @@ Crox的所有接口都声明在 `Crox` 这个JS对象上的。目前，具体的
 
 Crox是跨语言的模板引擎。
 
-由于Crox支持子模板导入(include)，在前端环境下，并不能像php或VM那样，能实时同步拿到所导入的子文件内容。
+由于Crox支持子模板导入(include)，在前端环境下，并不能像php或velocity等后端语言那样，实时同步拿到所导入的子文件内容。
 
-在以KISSY为基础的前端开发中，KISSY所支持的模块加载机制，是在前端环境中实现Crox include机制的捷径。
+在以KISSY为基础的前端环境中，KISSY所支持的模块加载机制，是在前端环境下实现Crox include机制的捷径。
 
 为了更好的完成Crox到KISSY模块的翻译，将Crox include机制和KISSY模块加载机制对应起来，并保证发布后的Crox-Kissy模块的效率，我们为Crox开发了 `Crox-Kissy-Grunt插件`。
 
 此插件适用于 `开发时` 和 `发布时` 两个使用场景：
 
-- 开发时，Crox模板tpl被编译成一个Crox-Kissy模块，该模块依赖Crox和其他子模板。[demo页面](http://gallery.kissyui.com/crox/1.0/demo/demo/before.html)
+- 开发时，Crox模板tpl被编译成一个Crox-Kissy模块，该模块依赖Crox和其他子模板。[Demo](http://gallery.kissyui.com/crox/1.0/demo/demo/before.html)
 
-- 发布时，Crox模板tpl被Crox.compile翻译成原生js Function，并被包装成Kissy模块，该模块不依赖Crox，也不依赖子模块。 [demo页面](http://gallery.kissyui.com/crox/1.0/demo/demo/after.html)
+- 发布时，Crox模板tpl被Crox.compile翻译成原生js Function，并被包装成Kissy模块，该模块不依赖Crox，也不依赖子模块。 [Demo](http://gallery.kissyui.com/crox/1.0/demo/demo/after.html)
 
 
 更多介绍，请移步：[http://gitlab.alibaba-inc.com/thx/crox-kissy](http://gitlab.alibaba-inc.com/thx/crox-kissy/tree/master)
