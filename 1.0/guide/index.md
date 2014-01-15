@@ -67,13 +67,11 @@ Crox的所有接口都声明在 `Crox` 这个JS对象上的。目前，具体的
 
 - Crox.render：将数据填充到Crox模板中，并生成渲染后的结果
 
-- Crox.compile：将Crox模板编译成JS Function
+- Crox.compile：将Crox模板编译成 `原生JS Function`
 
-以上三个接口是 `crox.js` 中包含的，以下两个接口，是 `crox-all.js` 中包含的
+- Crox.compileToPHP：将Crox模板编译成 `PHP函数`
 
-- Crox.compileToPHP：将Crox模板编译成PHP函数
-
-- Crox.compileToVM：将Crox模板翻译成Velocity模板
+- Crox.compileToVM：将Crox模板翻译成 `Velocity模板`
 
 更多API说明请参见 [http://thx.github.io/crox/](http://thx.github.io/crox/)
 
