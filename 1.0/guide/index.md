@@ -8,7 +8,7 @@ Crox将保证翻译后的结果具备最佳执行效率。
 
 * 版本：1.0
 * 作者：三冰，李牧，思竹，思霏
-* demo：[Demo](http://gallery.kissyui.com/crox/1.0/demo/index.html)
+* [Demo](http://gallery.kissyui.com/crox/1.0/demo/index.html)
 * [Crox的方案介绍](https://github.com/thx/crox/blob/master/docs/crox_design_overview.md)
 
 ## 初始化组件
@@ -55,7 +55,7 @@ KISSY.use('gallery/crox/1.0/index', function (S, Crox) {
 
 - set赋值： `{{set a = root.data.lilei.mother.phone.brand}}`
 
-- include子模板导入： `{{include subs/a.tpl}}`
+- include子模板导入： `{{include path/to/file.tpl}}`
 
 更多语法说明请参见： [http://thx.github.io/crox/](http://thx.github.io/crox/)
 
@@ -65,13 +65,15 @@ Crox的所有接口都声明在 `Crox` 这个JS对象上的。目前，具体的
 
 - Crox.parse：解析Crox模板生成语法树AST
 
+- Crox.render：将数据填充到Crox模板中，并生成渲染后的结果
+
 - Crox.compile：将Crox模板编译成JS Function
+
+以上三个接口是 crox.js` 中包含的，以下两个接口，是 `crox-all.js` 中包含的
 
 - Crox.compileToPHP：将Crox模板编译成PHP函数
 
 - Crox.compileToVM：将Crox模板翻译成Velocity模板
-
-- Crox.render：将数据填充到Crox模板中，并生成渲染后的结果
 
 更多API说明请参见 [http://thx.github.io/crox/](http://thx.github.io/crox/)
 
