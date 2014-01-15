@@ -69,7 +69,7 @@ Crox的所有接口都声明在 `Crox` 这个JS对象上的。目前，具体的
 
 - Crox.compile：将Crox模板编译成JS Function
 
-以上三个接口是 crox.js` 中包含的，以下两个接口，是 `crox-all.js` 中包含的
+以上三个接口是 `crox.js` 中包含的，以下两个接口，是 `crox-all.js` 中包含的
 
 - Crox.compileToPHP：将Crox模板编译成PHP函数
 
