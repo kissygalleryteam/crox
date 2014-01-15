@@ -171,13 +171,13 @@ return $s;
 同理，运行 `crox --target-type php`，将会翻译 `a.tpl` 并生成php文件 `a.php`。
 
 
-## Kissy环境下的Crox include支持
+## Kissy中Crox include的使用
 
 Crox是跨语言的模板引擎。
 
 Crox支持子模板导入(include)，一个模板可能include多个子模板，而每一个子模板，又可能include其他子模板。
 
-以Kissy为基础的前端环境，模板之间的依赖关系，非常像Kissy模块之间的依赖关系。Kissy所支持的模块依赖机制，能够与Crox的include进行良好的对应。
+以Kissy为基础的前端环境中，模板之间的依赖关系，非常像Kissy模块之间的依赖关系。Kissy所支持的模块依赖机制，能够与Crox的include进行良好的对应。
 
 因此，为了更好的完成Crox到Kissy模块的翻译，将Crox include机制和Kissy模块加载机制对应起来，并保证发布后的Crox-Kissy模块的效率，我们开发了一个Kissy下使用Crox的辅助工具。
 
@@ -202,7 +202,7 @@ Crox支持子模板导入(include)，一个模板可能include多个子模板，
 `src/app/partials/header/user/index.tpl`
 
 ```html
-<<div class="user">
+<div class="user">
     用户：<a href="#nogo">{{root.username}}</a>
 </div>
 ```
@@ -294,5 +294,7 @@ return {
 
 });
 ```
+
+具体使用示例，请参见 [开发时的示例](http://gallery.kissyui.com/crox/1.0/demo/demo/before.html) 和 [发布后的示例](http://gallery.kissyui.com/crox/1.0/demo/demo/after.html)
 
 更多介绍，请移步：[http://gitlab.alibaba-inc.com/thx/crox-kissy](http://gitlab.alibaba-inc.com/thx/crox-kissy/blob/master/README.md)
