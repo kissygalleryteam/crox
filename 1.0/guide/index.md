@@ -76,11 +76,37 @@ Crox的所有接口都声明在 `Crox` 这个JS对象上的。目前，具体的
 
 更多API说明请参见 [http://thx.github.io/crox/](http://thx.github.io/crox/)
 
+## 在Nodejs中使用Crox
+
+Crox已经加入npmjs，通过 `npm install crox` 即可安装到nodejs环境。
+
+使用时，将 `crox` 模块 通过 `require` 引用进来即可使用。
+
+### 示例
+
+```js
+    // 请先确保通过 npm install 已安装
+    var Crox = require('crox');
+    var tmpl = '{{root.a}} - {{root.b}}';
+
+    // 编译成原生js Function
+    var fn = Crox.compile(tmpl);
+
+    var html = fn({
+        a: 1,
+        b: 2
+    });
+
+    console.log(html);  // 1 - 2
+```
+
+Crox API所列出的所有功能，在Nodejs版本中同样可用。
+
 ## Crox-Kissy-Grunt插件
 
 Crox是跨语言的模板引擎。
 
-由于Crox支持子模板导入(include)，在前端环境下，并不能像php或velocity等后端语言那样，实时同步拿到所导入的子文件内容。
+Crox支持子模板导入(include)，但是在前端环境下，并不能像php或velocity等后端语言或模板引擎那样，实时同步的拿到所导入的子文件内容。
 
 在以KISSY为基础的前端环境中，KISSY所支持的模块加载机制，是在前端环境下实现Crox include机制的捷径。
 

@@ -2,7 +2,7 @@
     "name": "crox",
     "comName":"Crox",
     "version": "1.0",
-    "desc": "",
+    "desc": "在kissy中使用跨语言模板引擎crox",
     "tag":"跨终端,模板引擎,nodejs",
     "githubName":"wangjeaf",
     "author": {
