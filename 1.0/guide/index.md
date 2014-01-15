@@ -8,7 +8,8 @@ Crox将保证翻译后的结果具备最佳执行效率。
 
 * 版本：1.0
 * 作者：三冰，李牧，思竹，思霏
-* [Demo](http://gallery.kissyui.com/crox/1.0/demo/index.html)
+* [Crox Demo](http://gallery.kissyui.com/crox/1.0/demo/index.html)
+* [Crox-Kissy-Grunt Demo](http://gallery.kissyui.com/crox/1.0/demo/index-grunt.html)
 * [Crox的方案介绍](https://github.com/thx/crox/blob/master/docs/crox_design_overview.md)
 
 ## 初始化组件
