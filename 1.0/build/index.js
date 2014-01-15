@@ -13,7 +13,6 @@ gallery/crox/1.0/index
  *
  * Author: @三冰
  */
- 
 KISSY.add('gallery/crox/1.0/index',function(){
 
     var Crox = (function() {
