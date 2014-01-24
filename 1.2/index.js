@@ -8,7 +8,6 @@
 
 KISSY.add(function(){
 
-
 var Crox = (function() {
 function Class(base, constructor, methods) {
 	/// <param name="base" type="Function"></param>
