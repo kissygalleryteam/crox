@@ -1,17 +1,15 @@
 ## 综述
 
-**Crox已发布 1.2 版本，推荐使用最新的1.2版本**
-
 Crox是一个由JavaScript语言实现的高性能跨语言模板引擎。
 
 Crox模板可以直接在JavaScript环境中使用，也可以翻译成PHP、JSP等其他编程语言的可执行方法，或翻译成Velocity、Smarty等其他模板引擎的源模板。
 
 Crox将保证翻译后的结果具备最佳执行效率。
 
-* 版本：1.0
+* 版本：1.2
 * 作者：三冰，李牧，思竹，陆辉，思霏
-* [Crox Demo](http://gallery.kissyui.com/crox/1.0/demo/index.html)
-* [Kissy下使用Crox include的Demo](http://gallery.kissyui.com/crox/1.0/demo/index-grunt.html)
+* [Crox Demo](http://gallery.kissyui.com/crox/1.2/demo/index.html)
+* [Kissy下使用Crox include的Demo](http://gallery.kissyui.com/crox/1.2/demo/index-grunt.html)
 * [Crox的方案介绍](https://github.com/thx/crox/blob/master/docs/crox_design_overview.md)
 
 ## 初始化组件
@@ -33,7 +31,7 @@ KISSY.config({
 - 引用Crox
 
 ```js
-KISSY.use('gallery/crox/1.0/index', function (S, Crox) {
+KISSY.use('gallery/crox/1.2/index', function (S, Crox) {
      var tmpl = '{{root.a}} - {{root.b}}';
 
      // 编译成原生js Function
@@ -185,9 +183,9 @@ Crox支持子模板导入(include)，一个模板可能include多个子模板，
 
 此工具在不同的使用场景时所做的具体工作如下：
 
-- 开发时，Crox模板tpl被编译成一个Kissy模块，该模块保留原模板内容，并依赖Crox和其他子模板。[Demo](http://gallery.kissyui.com/crox/1.0/demo/demo/before.html)
+- 开发时，Crox模板tpl被编译成一个Kissy模块，该模块保留原模板内容，并依赖Crox和其他子模板。[Demo](http://gallery.kissyui.com/crox/1.2/demo/demo/before.html)
 
-- 发布时，Crox模板tpl被Crox.compile翻译成原生js Function，并被包装成Kissy模块（所有子模板依赖都将被替换）。该模块不依赖Crox，也不依赖子模块。 [Demo](http://gallery.kissyui.com/crox/1.0/demo/demo/after.html)
+- 发布时，Crox模板tpl被Crox.compile翻译成原生js Function，并被包装成Kissy模块（所有子模板依赖都将被替换）。该模块不依赖Crox，也不依赖子模块。 [Demo](http://gallery.kissyui.com/crox/1.2/demo/demo/after.html)
 
 ### 在Kissy下支持Crox include的翻译示例
 
@@ -297,6 +295,6 @@ return {
 });
 ```
 
-具体使用示例，请参见 [开发时的示例](http://gallery.kissyui.com/crox/1.0/demo/demo/before.html) 和 [发布后的示例](http://gallery.kissyui.com/crox/1.0/demo/demo/after.html)
+具体使用示例，请参见 [开发时的示例](http://gallery.kissyui.com/crox/1.2/demo/demo/before.html) 和 [发布后的示例](http://gallery.kissyui.com/crox/1.2/demo/demo/after.html)
 
 更多介绍，请移步：[http://gitlab.alibaba-inc.com/thx/crox-kissy](http://gitlab.alibaba-inc.com/thx/crox-kissy/blob/master/README.md)
