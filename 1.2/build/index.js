@@ -1,7 +1,7 @@
 /*
 combined files : 
 
-crox
+gallery/crox/1.2/index
 
 */
 /**
@@ -11,6 +11,9 @@ crox
  * Released under the MIT license
  * md5: 89e5af74562f9ef3d52ba371ccd62bee
  */
+
+KISSY.add('gallery/crox/1.2/index',function(){
+
 (function(root) {var Crox = (function() {
 function Class(base, constructor, methods) {
 	/// <param name="base" type="Function"></param>
@@ -927,4 +930,8 @@ Crox.compileToVM = function(s, currentPath) {
 	return codegen_vm_tran(parsetmpl(s));
 };
 
-Crox.version = "1.2.0";return Crox;})();if ( typeof module == "object" && module && typeof module.exports == "object" ) module.exports = Crox;else if (typeof define == "function" && (define.amd || define.cmd) ) define(function () { return Crox; } );else if (typeof KISSY != "undefined") KISSY.add("crox",function(){ return Crox; });if (root) root.Crox = Crox; })(this);
+Crox.version = "1.2.0";return Crox;})();
+
+})(this);
+
+});
