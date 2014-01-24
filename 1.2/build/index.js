@@ -14,7 +14,6 @@ gallery/crox/1.2/index
 
 KISSY.add('gallery/crox/1.2/index',function(){
 
-
 var Crox = (function() {
 function Class(base, constructor, methods) {
 	/// <param name="base" type="Function"></param>
