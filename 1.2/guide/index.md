@@ -16,7 +16,11 @@ Crox将保证翻译后的结果具备最佳执行效率。
 
 - 增加翻译到 `Velocity` 模板的功能
 
-- 更好的支持 `include` 语法及其翻译
+- 完善的支持 `include` 语法及其翻译
+
+- 全面接入 `Kissy Gallary`
+
+- 利用 Kissy 的 `模块加载机制`，更好的支持 `Crox模板` 翻译成 `Kissy模块` 时 `include` 语法的翻译。
 
 - 其他细节调整和bug修复
 
