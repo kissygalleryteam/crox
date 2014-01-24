@@ -14,7 +14,6 @@ gallery/crox/1.2/index
 
 KISSY.add('gallery/crox/1.2/index',function(){
 
-var Crox = (function() {
 function Class(base, constructor, methods) {
 	/// <param name="base" type="Function"></param>
 	/// <param name="constructor" type="Function"></param>
@@ -930,7 +929,7 @@ Crox.compileToVM = function(s, currentPath) {
 	return codegen_vm_tran(parsetmpl(s));
 };
 
-Crox.version = "1.2.0";return Crox;})();
+Crox.version = "1.2.0";
 
 return Crox;
 
