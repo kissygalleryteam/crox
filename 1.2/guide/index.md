@@ -14,15 +14,13 @@ Crox将保证翻译后的结果具备最佳执行效率。
 
 ## Crox 1.2 Changelogs
 
-- 增加翻译到 `Velocity` 模板的功能
+- 增加了Crox模板翻译成Velocity模板的功能，并完善了相关的Nodejs命令行工具
 
-- 完善的支持 `include` 语法及其翻译
+- 完善了include语法及其翻译
 
-- 全面接入 `Kissy Gallary`
+- 全面接入Kissy Gallary，同时利用Kissy的模块加载机制，更好的支持Crox模板翻译成Kissy模块时 include语法 的翻译
 
-- 利用 Kissy 的 `模块加载机制`，更好的支持 `Crox模板` 翻译成 `Kissy模块` 时 `include` 语法的翻译。
-
-- 其他细节调整和bug修复
+- 全面接入 THX 官网 (http://thx.alibaba-inc.com)
 
 ## 初始化组件
 
