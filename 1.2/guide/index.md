@@ -12,6 +12,14 @@ Crox将保证翻译后的结果具备最佳执行效率。
 * [Kissy下使用Crox include的Demo](http://gallery.kissyui.com/crox/1.2/demo/index-grunt.html)
 * [Crox的方案介绍](https://github.com/thx/crox/blob/master/docs/crox_design_overview.md)
 
+## Crox 1.2 Changelogs
+
+- 增加翻译到 `Velocity` 模板的功能
+
+- 更好的支持 `include` 语法及其翻译
+
+- 其他细节调整和bug修复
+
 ## 初始化组件
 
 - 配置Kissy(Kissy 1.3.0+ 不需要编写此代码)
@@ -137,9 +145,9 @@ return $t_r;
 
 - `-e` | `--encoding` 设置Crox模板文件的编码方式，默认是 `utf-8`
 
-- `--target-type` 翻译成的目标语言，比如：php|js等，默认是 `js`
+- `-t` | `--target-type` 翻译成的目标语言，比如：php|js|vm等，默认是 `js`
 
-- `--tpl-suffix` 模板文件后缀，默认是 `tpl`
+- `-x` | `--tpl-suffix` 模板文件后缀，默认是 `tpl`
 
 - `-o` | `--output` 翻译后文件的目标文件夹，默认是 `当前路径`
 
