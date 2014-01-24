@@ -20,7 +20,7 @@ Crox将保证翻译后的结果具备最佳执行效率。
 
 - 全面接入Kissy Gallary，同时利用Kissy的模块加载机制，更好的支持Crox模板翻译成Kissy模块时 include语法 的翻译
 
-- 全面接入 THX 官网 (http://thx.alibaba-inc.com)
+- 全面接入 THX 官网 (http://thx.github.io/crox/)
 
 ## 初始化组件
 
