@@ -8,7 +8,8 @@
 
 KISSY.add(function(){
 
-(function(root) {var Crox = (function() {
+
+var Crox = (function() {
 function Class(base, constructor, methods) {
 	/// <param name="base" type="Function"></param>
 	/// <param name="constructor" type="Function"></param>
@@ -926,6 +927,6 @@ Crox.compileToVM = function(s, currentPath) {
 
 Crox.version = "1.2.0";return Crox;})();
 
-})(this);
+return Crox;
 
 });
