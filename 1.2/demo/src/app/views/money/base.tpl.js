@@ -1,7 +1,7 @@
-KISSY.add('app/views/money/base.tpl', function(S, Crox, $1) {
+KISSY.add(function(S, require) {
+    var Crox = require('crox');
 
-    var tmpl = 
-'你好 {{root.name}}\
+    var tmpl = '你好 {{root.name}}\
 \
 你刚赢了 ￥{{ root.money.value}}\
 \
@@ -13,14 +13,11 @@ KISSY.add('app/views/money/base.tpl', function(S, Crox, $1) {
 \
 {{/if}}';
 
-    tmpl = tmpl.replace(RegExp('{{include ./submit.tpl}}', 'g'), $1.tmpl);
+    tmpl = tmpl.replace(RegExp('{{include ./submit.tpl}}', 'g'), require('./{{include ./submit.tpl}}.tpl').tmpl);
 
-    return {
-        tmpl: tmpl,
-        fn: Crox.compile(tmpl)
-    }
-}, {
-    requires: [
-        'crox', './submit.tpl'
-    ]
+
+    var fn = Crox.compile(tmpl);
+    fn.tmpl = tmpl;
+
+    return fn;
 });

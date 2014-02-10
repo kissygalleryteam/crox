@@ -3,7 +3,7 @@ KISSY.use('app/views/home/index', function(S, Home) {
         corp: 'alibaba MUX',
         username: 'zhifu.wzf',
         year: new Date().getFullYear(),
-        mode: developing ? '开发模式，未翻译，依赖Crox，请求多' : '发布模式，已翻译，不再依赖Crox，请求少',
+        mode: developing ? 'kissy模式，未翻译，依赖Crox' : 'kissyfn模式，已翻译，不再依赖Crox',
         classic: {
             name: "Chris",
             value: 10000,

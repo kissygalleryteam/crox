@@ -1,7 +1,7 @@
-KISSY.add('app/views/home/classicdemo/index.tpl', function(S, Crox) {
+KISSY.add(function(S, require) {
+    var Crox = require('crox');
 
-    var tmpl = 
-'<div class="module" style="margin-top: 30px; margin-left: 20px;">\
+    var tmpl = '<div class="module" style="margin-top: 30px; margin-left: 20px;">\
     <span class="tip">app/views/home/classicdemo/index.tpl</span>\
 <pre style="margin-bottom: 0; font-size: 16px;">\
     你好 {{root.classic.name}}<br>\
@@ -15,14 +15,9 @@ KISSY.add('app/views/home/classicdemo/index.tpl', function(S, Crox) {
 </pre>\
 </div>';
 
-    
 
-    return {
-        tmpl: tmpl,
-        fn: Crox.compile(tmpl)
-    }
-}, {
-    requires: [
-        'crox'
-    ]
+    var fn = Crox.compile(tmpl);
+    fn.tmpl = tmpl;
+
+    return fn;
 });

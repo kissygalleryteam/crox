@@ -5,7 +5,7 @@ gallery/crox/1.2/index
 
 */
 /**
- * @preserve Crox v1.2.0
+ * @preserve Crox v1.2.1
  * https://github.com/thx/crox
  *
  * Released under the MIT license
@@ -477,12 +477,15 @@ function isLogicalAnd(op) {
 function isLogicalOr(op) {
 	return isLogicalAnd(op) || op == '||';
 }
-
+function changeExt(s, ext) {
+	return s.replace(/\.\w+$/, '.' + ext);
+}
 
 /// <reference path="common.js"/>
 /// <reference path="codegen_common.js"/>
-function codegen_js_tran(prog) {
+function codegen_js_tran(prog, encodeName) {
 	/// <param name="prog" type="Array">AST</param>
+	/// <param name="encodeName" type="String"></param>
 	/// <returns type="String" />
 
 	var sIndent = '\t';
@@ -526,11 +529,11 @@ function codegen_js_tran(prog) {
 				break;
 			case 'eval':
 				var s = exprGen(a[1]);
-				if (a[2]) s = '$htmlEncode(' + s + ')';
-				emit('$print(' + s + ');');
+				if (a[2]) s = encodeName + '(' + s + ')';
+				emit('$s += ' + s + ';');
 				break;
 			case 'text':
-				emit('$print(' + quote(a[1]) + ');');
+				emit('$s += ' + quote(a[1]) + ';');
 				break;
 			case 'inc':
 				//stmtsGen(a[2][1]);
@@ -588,28 +591,26 @@ function codegen_js_tran(prog) {
 
 	return body;
 }
-function codegen_js_wrap(s) {
-	/// <param name="s" type="String"></param>
+function codegen_js_tofn(prog, config) {
+	/// <param name="prog" type="Array">AST</param>
+	/// <param name="config" type="Object" optional="true"></param>
 	/// <returns type="Function" />
-	var body = "var obj = { '<': '&lt;', '>': '&gt;', '&': '&amp;', '\"': '&quot;' };\n\
+	var encodeName;
+	if (config) encodeName = config.htmlEncode;
+	var s = codegen_js_tran(prog, encodeName || '$htmlEncode');
+	var body = '';
+	if (!encodeName)
+		body += "var obj = { '<': '&lt;', '>': '&gt;', '&': '&amp;', '\"': '&quot;' };\n\
 	function $htmlEncode(s) {\n\
 		return String(s).replace(/[<>&\"]/g, function(c) {\n\
 			return obj[c];\n\
 		});\n\
 	}";
-	body += ("var $s = '';");
-	body += ("function $print(s){ $s += s; }");
+	body += "var $s = '';";
 	body += s;
-	body += ("return $s;");
+	body += "return $s;";
 
 	var f = Function('root', body);
-	return f;
-}
-function codegen_js_tofn(prog) {
-	/// <param name="prog" type="Array">AST</param>
-	/// <returns type="Function" />
-	var s = codegen_js_tran(prog);
-	var f = codegen_js_wrap(s);
 	return f;
 }
 
@@ -620,22 +621,17 @@ function parsetmpl(s) {
 	var ast = parse(Lexer(s));
 	return ast;
 }
-function compile2jsfn(s) {
+function compile2jsfn(s, config) {
 	/// <summary>编译模板，得到一个 js 函数</summary>
+	/// <param name="config" type="Object" optional="true"></param>
 	/// <param name="s" type="String">模板</param>
 	/// <returns type="Function" />
 	var ast = parsetmpl(s);
-	return codegen_js_tofn(ast);
+	return codegen_js_tofn(ast, config);
 }
 var Crox = {
 	parse: parsetmpl,
 	compile: compile2jsfn,
-	compileToJs: function(s) {
-		/// <summary>返回编译后的 js 代码</summary>
-		/// <param name="s" type="String"></param>
-		/// <returns type="String" />
-		return codegen_js_tran(parsetmpl(s));
-	},
 	render: function(s, data) {
 		/// <summary>将数据 data 填充到模板 s</summary>
 		/// <param name="s" type="String">模板</param>
@@ -653,24 +649,31 @@ function codegen_php_tran(prog) {
 	var s_indent = '';
 
 	function indent() {
-		s_indent += '  ';
+		//s_indent += '  ';
 	}
 	function outdent() {
-		s_indent = s_indent.substr(0, s_indent.length - 2);
+		//s_indent = s_indent.substr(0, s_indent.length - 2);
 	}
 
-	function emit(s) {
-		s_output += s_indent + s + '\n';
+	function emit(t) {
+		s += t;
 	}
 	function compileEval(stmt) {
-		var t = 'ToString(' + walkExpr(stmt[1]) + ')';
+		var t = walkExpr(stmt[1]);
 		if (stmt[2]) {
-			t = 'htmlspecialchars(' + t + ", ENT_COMPAT, 'GB2312')";
+			t = 'crox_encode(' + t + ')';
+		} else {
+			t = 'crox_ToString(' + t + ')';
 		}
-		emit('$t_r .= ' + t + ';');
+		emit('echo ' + t + ';');
 	}
 	function compileContent(stmt) {
-		emit('$t_r .= ' + phpQuote(stmt[1]) + ';');
+		var t = stmt[1];
+		if (/<\?(?:php)?|\?>/.test(t))
+			emit('echo ' + phpQuote(stmt[1]) + ';');
+		else {
+			emit('?>' + t + '<?php ');
+		}
 	}
 	function compileIf(stmt) {
 		emit('if(' + walkExpr(stmt[1]) + '){');
@@ -687,8 +690,8 @@ function codegen_php_tran(prog) {
 		}
 	}
 	function compileEach(stmt) {
-		var idKey = stmt[3] ? '$i_' + stmt[3] + '=>' : '';
-		emit('foreach(' + walkExpr(stmt[1]) + ' as ' + idKey + '$i_' + stmt[4] + ')');
+		var idKey = stmt[3] ? '$crox_' + stmt[3] + '=>' : '';
+		emit('foreach(' + walkExpr(stmt[1]) + ' as ' + idKey + '$crox_' + stmt[4] + ')');
 		emit('{');
 		indent();
 		compileStmts(stmt[2]);
@@ -696,7 +699,7 @@ function codegen_php_tran(prog) {
 		emit('}');
 	}
 	function compileSet(stmt) {
-		emit('$i_' + stmt[1] + ' = ' + walkExpr(stmt[2]) + ';');
+		emit('$crox_' + stmt[1] + ' = ' + walkExpr(stmt[2]) + ';');
 	}
 	function compileStmt(a) {
 		switch (a[0]) {
@@ -706,7 +709,7 @@ function codegen_php_tran(prog) {
 			case 'eval': compileEval(a); break;
 			case 'text': compileContent(a); break;
 			case 'inc':
-				//emit("include '" + a[1] + "';");
+				emit("include '" + changeExt(a[1], 'php') + "';");
 				break;
 			default: throw Error('unknown stmt: ' + a[0]);
 		}
@@ -724,7 +727,7 @@ function codegen_php_tran(prog) {
 	function walkExpr(x) {
 		switch (x[0]) {
 			case 'id':
-				return '$i_' + x[1];
+				return '$crox_' + x[1];
 			case 'lit':
 				if (typeof x[1] == 'string')
 					return phpQuote(x[1]);
@@ -734,13 +737,13 @@ function codegen_php_tran(prog) {
 			case '[]':
 				return exprToStr(x[1], isMember) + '[' + walkExpr(x[2]) + ']';
 			case '!':
-				return '!ToBoolean(' + exprToStr(x[1], isUnary) + ')';
+				return '!crox_ToBoolean(' + exprToStr(x[1], isUnary) + ')';
 			case 'u-':
 				return '- ' + exprToStr(x[1], isUnary);
 			case '*': case '/': case '%':
 				return exprToStr(x[1], isMul) + x[0] + exprToStr(x[2], isUnary);
 			case '+':
-				return 'plus(' + exprToStr(x[1], null) + ', ' + exprToStr(x[2], null) + ')';
+				return 'crox_plus(' + exprToStr(x[1], null) + ', ' + exprToStr(x[2], null) + ')';
 			case '-':
 				return exprToStr(x[1], isAdd) + '- ' + exprToStr(x[2], isMul);
 			case '<': case '>': case '<=': case '>=':
@@ -749,58 +752,23 @@ function codegen_php_tran(prog) {
 				var op = x[0] == 'eq' ? '===' : '!==';
 				return exprToStr(x[1], isEquality) + op + exprToStr(x[2], isRel);
 			case '&&':
-				return 'logical_and(' + exprToStr(x[1], null) + ', ' + exprToStr(x[2], null) + ')';
+				return 'crox_logical_and(' + exprToStr(x[1], null) + ', ' + exprToStr(x[2], null) + ')';
 			case '||':
-				return 'logical_or(' + exprToStr(x[1], null) + ', ' + exprToStr(x[2], null) + ')';
+				return 'crox_logical_or(' + exprToStr(x[1], null) + ', ' + exprToStr(x[2], null) + ')';
 			default:
 				throw Error("unknown expr: " + x[0]);
 		}
 	}
 
-	var s_output = "$t_r = '';\n";
+	var s = "";
 	compileStmts(prog[1]);
-
-	return s_output;
-}
-function codegen_php_wrap(s) {
-	/// <param name="s" type="String"></param>
-	/// <returns type="String" />
-	var s_output = "function temp($i_root) {\n";
-	s_output += 'function isNumber($a) { return is_float($a) || is_int($a); }\n';
-	s_output += 'function plus($a, $b) {\
-if (isNumber($a) && isNumber($b)) {\
-	return $a + $b;\
-}\
-else {\
-	return ToString($a) . ToString($b);\
-}\
-}\n';
-	s_output += 'function logical_and($a, $b) { return $a ? $b : $a; }\n';
-	s_output += 'function logical_or($a, $b) { return $a ? $a : $b; }\n';
-	s_output += "function ToString($a) {\n\
-	if (is_string($a)) return $a;\n\
-	if (isNumber($a)) return (string)$a;\n\
-	if (is_bool($a)) return $a ? 'true' : 'false';\n\
-	if (is_null($a)) return 'null';\n\
-	if (is_array($a)) {\n\
-		$s = '';\n\
-		for ($i = 0; $i < count($a); ++$i) {\n\
-			if ($i > 0) $s .= ',';\n\
-			if (!is_null($a[$i]))\n\
-				$s .= ToString($a[$i]);\n\
-		}\n\
-		return $s;\n\
-	}\n\
-	return '[object Object]';\n\
-}\n";
-	s_output += 'function ToBoolean($a) {\n\
-	if (is_string($a)) return strlen($a) > 0;\n\
-	if (is_array($a) || is_object($a)) return true;\n\
-	return (bool)$a;\n\
-}\n';
-	s_output += s;
-	s_output += 'return $t_r;\n}';
-	return s_output;
+	if (s.slice(0, 2) == '?>')
+		s = s.slice(2);
+	else s = '<?php ' + s;
+	if (s.slice(-6) == '<?php ')
+		s = s.slice(0, -6);
+	else s += '?>';
+	return s;
 }
 
 /// <reference path="common.js"/>
@@ -851,7 +819,7 @@ function codegen_vm_tran(prog, nl) {
 				//emit('#set($t = ' + vmQuote(a[1]) + ')${t}');
 				break;
 			case 'inc':
-				emit("#parse('" + a[1].replace(/\.\w+$/, '.vm') + "')");
+				emit("#parse('" + changeExt(a[1], 'vm') + "')");
 				break;
 			default:
 				throw Error('unknown stmt: ' + a[0]);
@@ -917,10 +885,10 @@ function codegen_vm_tran(prog, nl) {
 /// <reference path="codegen_php.js"/>
 /// <reference path="codegen_vm.js"/>
 Crox.compileToPhp = function(s) {
-	/// <summary>返回编译后的 php 函数</summary>
+	/// <summary>返回编译后的 php</summary>
 	/// <param name="s" type="String"></param>
 	/// <returns type="String" />
-	return codegen_php_wrap(codegen_php_tran(parsetmpl(s)));
+	return codegen_php_tran(parsetmpl(s));
 };
 Crox.compileToVM = function(s, currentPath) {
 	/// <summary>返回编译后的 VM 模板</summary>
@@ -929,7 +897,7 @@ Crox.compileToVM = function(s, currentPath) {
 	return codegen_vm_tran(parsetmpl(s));
 };
 
-Crox.version = "1.2.0";
+Crox.version = "1.2.1";
 
 return Crox;
 

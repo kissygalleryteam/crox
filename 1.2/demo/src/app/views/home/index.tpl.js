@@ -1,27 +1,24 @@
-KISSY.add('app/views/home/index.tpl', function(S, Crox, $1, $2, $3) {
+KISSY.add(function(S, require) {
+    var Crox = require('crox');
 
-    var tmpl = 
-'<div class="module" style="margin: 20px auto; width: 980px;">\
+    var tmpl = '<div class="module" style="margin: 20px auto; width: 980px;">\
     <span class="tip">app/views/home/index.tpl</span>\
 \
-{{include ../../partials/header/index.tpl}}\
+{{include "../../partials/header/index.tpl"}}\
 \
-{{include content.tpl}}\
+{{include "content.tpl"}}\
 \
-{{include app/partials/footer/index.tpl}}\
+{{include "app/partials/footer/index.tpl"}}\
 \
 </div>';
 
-    tmpl = tmpl.replace(RegExp('{{include ../../partials/header/index.tpl}}', 'g'), $1.tmpl);
-    tmpl = tmpl.replace(RegExp('{{include content.tpl}}', 'g'), $2.tmpl);
-    tmpl = tmpl.replace(RegExp('{{include app/partials/footer/index.tpl}}', 'g'), $3.tmpl);
+    tmpl = tmpl.replace(RegExp('{{include "../../partials/header/index.tpl"}}', 'g'), require('../../partials/header/index.tpl').tmpl);
+    tmpl = tmpl.replace(RegExp('{{include "content.tpl"}}', 'g'), require('./content.tpl').tmpl);
+    tmpl = tmpl.replace(RegExp('{{include "app/partials/footer/index.tpl"}}', 'g'), require('app/partials/footer/index.tpl').tmpl);
 
-    return {
-        tmpl: tmpl,
-        fn: Crox.compile(tmpl)
-    }
-}, {
-    requires: [
-        'crox', '../../partials/header/index.tpl', './content.tpl', 'app/partials/footer/index.tpl'
-    ]
+
+    var fn = Crox.compile(tmpl);
+    fn.tmpl = tmpl;
+
+    return fn;
 });

@@ -1,21 +1,13 @@
-KISSY.add('app/partials/footer/index.tpl', function(S) {
+KISSY.add(function(S, require) {
 
-var croxFn = function anonymous(root) {
-var obj = { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' };
-	function $htmlEncode(s) {
-		return String(s).replace(/[<>&"]/g, function(c) {
-			return obj[c];
-		});
-	}var $s = '';function $print(s){ $s += s; }	$print("<div class=\"module\" style=\"text-align: center; margin: 10px;\">    <span class=\"tip\">app/partials/footer/index.tpl</span>    Copy right @ ");
-	$print($htmlEncode(root.corp));
-	$print(" ");
-	$print($htmlEncode(root.year));
-	$print("</div>");
-return $s;
-};
-
-return {
-    fn: croxFn
-};
+    return function(root) {
+        var $s = '';
+        $s += "<div class=\"module\" style=\"text-align: center; margin: 10px;\">\n    <span class=\"tip\">app/partials/footer/index.tpl</span>\n    Copy right @ ";
+        $s += KISSY.escapeHtml(root.corp);
+        $s += " ";
+        $s += KISSY.escapeHtml(root.year);
+        $s += "\n</div>";
+        return $s;
+    };
 
 });

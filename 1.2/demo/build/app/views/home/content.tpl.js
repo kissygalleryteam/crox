@@ -1,27 +1,11 @@
-KISSY.add('app/views/home/content.tpl', function(S) {
+KISSY.add(function(S, require) {
 
-var croxFn = function anonymous(root) {
-var obj = { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' };
-	function $htmlEncode(s) {
-		return String(s).replace(/[<>&"]/g, function(c) {
-			return obj[c];
-		});
-	}var $s = '';function $print(s){ $s += s; }	$print("<div class=\"module\" style=\"margin: 30px 10px;\">    <span class=\"tip\">app/views/home/content.tpl</span>    <h3>Crox经典示例的Kissy再现</h3>    <div class=\"module\" style=\"margin-top: 30px; margin-left: 20px;\">    <span class=\"tip\">app/views/home/classicdemo/index.tpl</span><pre style=\"margin-bottom: 0; font-size: 16px;\">    你好 ");
-	$print($htmlEncode(root.classic.name));
-	$print("<br><br>    你刚赢了 ￥");
-	$print($htmlEncode(root.classic.value));
-	$print("<br><br>");
-	if(root.classic.in_ca){
-		$print("    嗯，税后 ￥");
-		$print($htmlEncode(root.classic.taxed_value));
-		$print("<br>");
-	}
-	$print("<br></pre></div></div>");
-return $s;
-};
-
-return {
-    fn: croxFn
-};
+    return function(root) {
+        var $s = '';
+        $s += "<div class=\"module\" style=\"margin: 30px 10px;\">\n    <span class=\"tip\">app/views/home/content.tpl</span>\n    <h3>Crox经典示例的Kissy再现</h3>\n    " +
+            require('./classicdemo/index.tpl')(root) +
+            "\n</div>";
+        return $s;
+    };
 
 });
