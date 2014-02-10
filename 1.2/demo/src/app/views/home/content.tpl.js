@@ -1,20 +1,17 @@
-KISSY.add('app/views/home/content.tpl', function(S, Crox, $1) {
+KISSY.add(function(S, require) {
+    var Crox = require('crox');
 
-    var tmpl = 
-'<div class="module" style="margin: 30px 10px;">\
+    var tmpl = '<div class="module" style="margin: 30px 10px;">\
     <span class="tip">app/views/home/content.tpl</span>\
     <h3>Crox经典示例的Kissy再现</h3>\
-    {{include ./classicdemo/index.tpl}}\
+    {{include "./classicdemo/index.tpl"}}\
 </div>';
 
-    tmpl = tmpl.replace(RegExp('{{include ./classicdemo/index.tpl}}', 'g'), $1.tmpl);
+    tmpl = tmpl.replace(RegExp('{{include "./classicdemo/index.tpl"}}', 'g'), require('./classicdemo/index.tpl').tmpl);
 
-    return {
-        tmpl: tmpl,
-        fn: Crox.compile(tmpl)
-    }
-}, {
-    requires: [
-        'crox', './classicdemo/index.tpl'
-    ]
+
+    var fn = Crox.compile(tmpl);
+    fn.tmpl = tmpl;
+
+    return fn;
 });

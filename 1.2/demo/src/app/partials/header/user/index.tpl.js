@@ -1,19 +1,14 @@
-KISSY.add('app/partials/header/user/index.tpl', function(S, Crox) {
+KISSY.add(function(S, require) {
+    var Crox = require('crox');
 
-    var tmpl = 
-'<div class="module" style="float: right; font-size: 16px; margin-top: -10px; padding-top: 16px;">\
+    var tmpl = '<div class="module" style="float: right; font-size: 16px; margin-top: -10px; padding-top: 16px;">\
     <span class="tip">user.tpl</span>\
     用户：<a href="#nogo">{{root.username}}</a>\
 </div>';
 
-    
 
-    return {
-        tmpl: tmpl,
-        fn: Crox.compile(tmpl)
-    }
-}, {
-    requires: [
-        'crox'
-    ]
+    var fn = Crox.compile(tmpl);
+    fn.tmpl = tmpl;
+
+    return fn;
 });
