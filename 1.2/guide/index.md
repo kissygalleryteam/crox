@@ -62,6 +62,16 @@ Crox 模板语法说明请参见： [http://thx.github.io/crox/apis/tpl-api/](ht
 
 Crox API说明请参见 [http://thx.github.io/crox/apis/js-api/](http://thx.github.io/crox/apis/js-api/)
 
+## 将Crox翻译任务集成到Grunt
+
+目前已为Crox开发出Grunt插件：`grunt-contrib-crox`，已经能顺利的将Crox集成到Grunt中了
+
+通过 `grunt crox` 即可实现所有Crox模板的批量翻译
+
+通过 `grunt watch` 启用watch插件并实时监测Crox模板文件的改动
+
+如果感兴趣，请戳这里：[https://github.com/wangjeaf/grunt-contrib-crox](https://github.com/wangjeaf/grunt-contrib-crox)
+
 ## 在Nodejs中使用Crox
 
 Crox已经加入npmjs，Crox本身是一个nodejs模块，可被其他模块引用。
