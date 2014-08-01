@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+
+    <script src="http://g.tbcdn.cn/kissy/k/1.4.1/seed.js" data-config="{combine:true}"></script>
+
+    <script type="text/javascript">
+        var developing = false;
+        KISSY.config({
+            packages:[{
+                name: 'app',
+                combine: false,
+                path:'../build/',
+                debug: true,
+                tag: new Date().getTime()
+            }]
+        });
+    </script>
+    <link rel="stylesheet" type="text/css" href="index.css"/>
+</head>
+<body>
+    <div id="page"></div>
+    <script type="text/javascript">
+    KISSY.use('gallery/crox/1.0/index, app/views/money/base.tpl', function(S, Crox, Tmpl) {
+        var html = Tmpl.fn({
+          "name": "思竹",
+          "money": {
+            "value": 10000,
+            "taxed_value": 10000 - (10000 * 0.4)
+          },
+          "in_ca": true,
+          "wife": "老婆大人"
+        });
+
+        console.log(html);
+    });
+    </script>
+</body>
+</html>
